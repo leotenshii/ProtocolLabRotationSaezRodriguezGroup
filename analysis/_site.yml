@@ -1,7 +1,7 @@
-name: protocol
+name: ProtocolLabRotationSaezRodriguezGroup
 output_dir: ../docs
 navbar:
-  title: protocol
+  title: ProtocolLabRotationSaezRodriguezGroup
   left:
   - text: Home
     href: index.html

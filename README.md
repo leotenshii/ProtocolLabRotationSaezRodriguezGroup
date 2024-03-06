@@ -1,4 +1,4 @@
-# protocol
+# ProtocolLabRotationSaezRodriguezGroup
 
 A [workflowr][] project.
 

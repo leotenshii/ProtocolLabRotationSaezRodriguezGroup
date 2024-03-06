@@ -7,4 +7,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+This is the protocol for my lab rotation with the Saez-Rodriguez Group during my master's studies at Heidelberg University from 12.23 to 3.24. 
+During the rotation, I created different vignettes for the R-package [MISTy]("https://saezlab.github.io/mistyR/index.html") under the supervision of Jovan Tanevski.
+On this website, I wrap up the project with some additional information about my work.

@@ -7,6 +7,11 @@ output:
 editor_options:
   chunk_output_type: console
 ---
+Table of contents:
 
-Welcome to my research website.
-[Learning functional and structural spatial relationships with MISTy](FunctionalAndStructuralPipeline.html)
+- [Structural analysis with MISTy - based on cell2location deconvolution](MistyRStructuralAnalysisPipelineC2L.html)
+- [Structural analysis with MISTy - based on DOT deconvolution](MistyRStructuralAnalysisPipelineDOT.html)
+- [Functional analysis with MISTy - pathway specific genes](FunctionalPipelinePathwaySpecific.html)
+- [Functional analysis with MISTy - pathway activity and ligand expression](FunctionalPipelinePathwayActivityLigands.html)
+- [Learning functional and structural spatial relationships with MISTy](FunctionalAndStructuralPipeline.html)
+- [MISTy representation based analysis of IMC breast cancer data](ReproduceSignaturePaper.html)

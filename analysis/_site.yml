@@ -1,22 +1,24 @@
-name: ProtocolLabRotationSaezRodriguezGroup
+name: Protocol for my lab-rotation with the Saez Rodriguez group
 output_dir: ../docs
 navbar:
   title: Protocol for my lab-rotation with the Saez Rodriguez group
   left:
   - text: Table of contents
     href: index.html
-  - text: Structural analysis with MISTy - based on cell2location deconvolution
-    href: MistyRStructuralAnalysisPipelineC2L.html
-  - text: Structural analysis with MISTy - based on DOT deconvolution
-    href: MistyRStructuralAnalysisPipelineDOT.html
-  - text: Functional analysis with MISTy - pathway specific genes
-    href: FunctionalPipelinePathwaySpecific.html
-  - text: Functional analysis with MISTy - pathway activity and ligand expression
-    href: FunctionalPipelinePathwayActivityLigands.html
-  - text: Learning functional and structural spatial relationships with MISTy
-    href: FunctionalAndStructuralPipeline.html
-  - text: MISTy representation based analysis of IMC breast cancer data
-    href: ReproduceSignaturePaper.html
+  - text: Vignettes
+    menu:
+      - text: Structural analysis with MISTy - based on cell2location deconvolution
+        href: MistyRStructuralAnalysisPipelineC2L.html
+      - text: Structural analysis with MISTy - based on DOT deconvolution
+        href: MistyRStructuralAnalysisPipelineDOT.html
+      - text: Functional analysis with MISTy - pathway specific genes
+        href: FunctionalPipelinePathwaySpecific.html
+      - text: Functional analysis with MISTy - pathway activity and ligand expression
+        href: FunctionalPipelinePathwayActivityLigands.html
+      - text: Learning functional and structural spatial relationships with MISTy
+        href: FunctionalAndStructuralPipeline.html
+      - text: MISTy representation based analysis of IMC breast cancer data
+        href: ReproduceSignaturePaper.html
   - text: About
     href: about.html
   - text: License
@@ -31,3 +33,4 @@ output:
     toc_float: yes
     theme: sandstone
     highlight: textmate
+    code_folding: show

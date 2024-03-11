@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2024-03-11" />
+
+<title>Learning functional and structural spatial relationships with MISTy</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Protocol for my lab-rotation with the Saez Rodriguez group</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Table of contents</a>
+</li>
+<li>
+  <a href="MistyRStructuralAnalysisPipelineC2L.Rmd">Structural analysis with MISTy - based on cell2location deconvolution</a>
+</li>
+<li>
+  <a href="MistyRStructuralAnalysisPipelineDOT.Rmd">Structural analysis with MISTy - based on DOT deconvolution</a>
+</li>
+<li>
+  <a href="FunctionalPipelinePathwaySpecific.Rmd">Functional analysis with MISTy - pathway specific genes</a>
+</li>
+<li>
+  <a href="FunctionalPipelinePathwayActivityLigands.Rmd">Functional analysis with MISTy - pathway activity and ligand expression</a>
+</li>
+<li>
+  <a href="FunctionalAndStructuralPipeline.Rmd">Learning functional and structural spatial relationships with MISTy</a>
+</li>
+<li>
+  <a href="ReproduceSignaturePaper.Rmd">MISTy representation based analysis of IMC breast cancer data</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/leotenshii/protocol">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Learning functional and structural spatial
+relationships with MISTy</h1>
+<h4 class="author">Leoni Zimmermann</h4>
+<address class="author_afil">
+Heidelberg University, Heidelberg, Germany<br><h4 class="author">Jovan
+Tanevski</h4>
+<address class="author_afil">
+Heidelberg University and Heidelberg University Hospital, Heidelberg,
+GermanyJožef Stefan Institute, Ljubljana,
+Slovenia<br><a class="author_email" href="mailto:#"><a
+href="mailto:jovan.tanevski@uni-heidelberg.de"
+class="email">jovan.tanevski@uni-heidelberg.de</a></a>
+</address>
+<h4 class="date">2024-03-11</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-03-11
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>ProtocolLabRotationSaezRodriguezGroup/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240306code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240306)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240306code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240306)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree38a9f93e85199971b1674f15a9a7b528ec582d8btargetblank38a9f93a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/38a9f93e85199971b1674f15a9a7b528ec582d8b" target="_blank">38a9f93</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree38a9f93e85199971b1674f15a9a7b528ec582d8btargetblank38a9f93a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/38a9f93e85199971b1674f15a9a7b528ec582d8b" target="_blank">38a9f93</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  ACH005/
+    Untracked:  data/10X_Visium_ACH005.tar.gz
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/FunctionalAndStructuralPipeline.Rmd</code>) and HTML
+(<code>docs/FunctionalAndStructuralPipeline.html</code>) files. If
+you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table
+below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/blob/38a9f93e85199971b1674f15a9a7b528ec582d8b/analysis/FunctionalAndStructuralPipeline.Rmd" target="_blank">38a9f93</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-11
+</td>
+<td>
+Revert "changed paths to data/…"
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/blob/5e9bf15197b10ae67cdd54cd23cb270805288e35/analysis/FunctionalAndStructuralPipeline.Rmd" target="_blank">5e9bf15</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-11
+</td>
+<td>
+changed paths to data/…
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/blob/5ec41b8847e25c78b65644368fcf59c3f6654c4f/analysis/FunctionalAndStructuralPipeline.Rmd" target="_blank">5ec41b8</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-11
+</td>
+<td>
+upload of vignettes
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>10X Visium captures spatially resolved transcriptomic profiles in
+spots containing multiple cells. In this vignette, we will use the gene
+expression information from Visium data to infer pathway and
+transcription factor activity and separately investigate spatial
+relationships between them and the cell-type composition. In addition,
+we will examine spatial relationships of ligands and receptors.</p>
+<p>Load the necessary R packages:</p>
+<pre class="r"><code># MISTy
+library(mistyR)
+
+# For using Python 
+library(reticulate)
+
+# Seurat
+library(Seurat)
+
+# Data manipulation
+library(tidyverse)
+
+# Pathways
+library(decoupleR)
+
+#Cleaning names
+library(janitor)</code></pre>
+<p>We will use some functions in python since the computation time is
+significantly shorter than in R. Python chunks start with a #In Python.
+Install and load the necessary package for Python:</p>
+<pre class="r"><code>py_install(c(&quot;decoupler&quot;,&quot;omnipath&quot;), pip =TRUE)</code></pre>
+<pre><code>Using virtual environment &quot;C:/Users/leote/Documents/.virtualenvs/r-reticulate&quot; ...</code></pre>
+<pre><code>+ &quot;C:/Users/leote/Documents/.virtualenvs/r-reticulate/Scripts/python.exe&quot; -m pip install --upgrade --no-user decoupler omnipath</code></pre>
+<pre class="python"><code># In Python:
+import decoupler as dc</code></pre>
+</div>
+<div id="get-and-load-data" class="section level2">
+<h2>Get and load data</h2>
+<p>For this showcase, we use a 10X Visium spatial slide from <a
+href="https://doi.org/10.1038/s41586-022-05060-x">Kuppe et al.,
+2022</a>, where they created a spatial multi-omic map of human
+myocardial infarction. The tissue example data comes from the human
+heart of patient 14, which is in a chronic state following myocardial
+infarction. The Seurat object contains, among other things, the
+normalized and raw gene counts. First, we have to download and extract
+the file:</p>
+<pre class="r"><code>download.file(&quot;https://zenodo.org/records/6580069/files/10X_Visium_ACH005.tar.gz?download=1&quot;,
+    destfile = &quot;10X_Visium_ACH005.tar.gz&quot;, method = &quot;curl&quot;)
+untar(&quot;10X_Visium_ACH005.tar.gz&quot;)</code></pre>
+<p>The next step is to load the data, extract the normalized gene counts
+of genes expressed in at least 5% of the spots, and pixel coordinates.
+It is recommended to use pixel coordinates instead of row and column
+numbers since the rows are shifted and therefore do not express the real
+distance between the spots.</p>
+<pre class="r"><code>seurat &lt;- readRDS(&quot;ACH005/ACH005.rds&quot;)
+expression_raw &lt;- as.matrix(GetAssayData(seurat, layer = &quot;counts&quot;, assay = &quot;SCT&quot;))
+geometry &lt;- GetTissueCoordinates(seurat, scale = NULL)
+
+# Only take genes that  expressed in at least 5% of the spots
+expression &lt;- expression_raw[rownames(expression_raw[(rowSums(expression_raw &gt; 0) / ncol(expression_raw)) &gt;= 0.05,]),]</code></pre>
+<p>Let’s take a look at the slide itself and some of the cell-type
+niches defined by <a
+href="https://doi.org/10.1038/s41586-022-05060-x">Kuppe et al.</a>:</p>
+<pre class="r"><code>SpatialPlot(seurat, alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>SpatialPlot(seurat, group.by = &quot;celltype_niche&quot;)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="extract-cell-type-composition" class="section level2">
+<h2>Extract cell-type composition</h2>
+<p>The Seurat Object of the tissue slide also contains the estimated
+cell type proportions from cell2location. We extract them into a
+separate object we will later use with MISTy and visualize some of the
+cell types:</p>
+<pre class="r"><code># Rename to more informative names
+rownames(seurat@assays$c2l_props@data) &lt;- rownames(seurat@assays$c2l_props@data) %&gt;% 
+  recode(&#39;Adipo&#39; = &#39;Adipocytes&#39;,
+         &#39;CM&#39; = &#39;Cardiomyocytes&#39;,
+         &#39;Endo&#39; = &#39;Endothelial&#39;,
+         &#39;Fib&#39; = &#39;Fibroblasts&#39;,
+         &#39;PC&#39; = &#39;Pericytes&#39;,
+         &#39;prolif&#39; = &#39;Proliferating&#39;,
+         &#39;vSMCs&#39; = &#39;Vascular-SMCs&#39;)
+
+# Extract into a separate object
+composition &lt;- as_tibble(t(seurat[[&quot;c2l_props&quot;]]$data))
+
+
+# Visualize cell types
+DefaultAssay(seurat) &lt;- &quot;c2l_props&quot;
+SpatialFeaturePlot(seurat, 
+                   keep.scale = NULL, 
+                   features = c(&#39;Vascular-SMCs&#39;, &quot;Cardiomyocytes&quot;, &quot;Endothelial&quot;, &quot;Fibroblasts&quot;),
+                   ncol = 2) </code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pathway-activities-on-cell-type-composition"
+class="section level2">
+<h2>Pathway activities on cell-type composition</h2>
+<p>Let’s investigate the relationship between the cell-type compositions
+and pathway activities in our example slide. But before we create the
+views, we need to estimate the pathway activities. For this we will take
+pathway gene sets from <a
+href="https://saezlab.github.io/progeny/index.html"><code>PROGENy</code></a>
+and estimate the activity with <a
+href="https://saezlab.github.io/decoupleR/"><code>decoupleR</code></a>:</p>
+<pre class="r"><code># Obtain genesets
+model &lt;- get_progeny(organism = &quot;human&quot;, top = 500)
+
+# Use multivariate linear model to estimate activity
+est_path_act &lt;- run_mlm(expression, model,.mor = NULL) </code></pre>
+<p>We add the result to the Seurat Object and plot the estimated
+activities to see the distribution over the slide:</p>
+<pre class="r"><code># Delete progeny assay from Kuppe et al.
+seurat[[&#39;progeny&#39;]] &lt;- NULL
+
+# Put estimated pathway activities object into the correct format
+est_path_act_wide &lt;- est_path_act %&gt;% 
+  pivot_wider(id_cols = condition, names_from = source, values_from = score) %&gt;%
+  column_to_rownames(&quot;condition&quot;) 
+
+# Clean names
+colnames(est_path_act_wide)  &lt;- est_path_act_wide %&gt;% 
+  clean_names(parsing_option = 0) %&gt;% 
+  colnames(.)
+
+# Add
+seurat[[&#39;progeny&#39;]] &lt;- CreateAssayObject(counts = t(est_path_act_wide))
+
+SpatialFeaturePlot(seurat, features = c(&quot;jak.stat&quot;, &quot;hypoxia&quot;), image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="misty-views" class="section level3">
+<h3>MISTy Views</h3>
+<p>For the MISTy view, we will use cell type compositions per spot as
+the intraview and add the estimated <a
+href="https://saezlab.github.io/progeny/index.html"><code>PROGENy</code></a>
+pathway activities as juxta and paraviews. The size of the neighborhood
+and the kernel, as well as the kernel family, should be chosen depending
+on the experiment. Here both distances were chosen to enclose only a
+small number of neighboring spots.</p>
+<pre class="r"><code># Clean names
+colnames(composition)  &lt;- composition %&gt;% clean_names(parsing_option = 0) %&gt;% colnames(.)
+
+# create intra from cell-type composition
+comp_views &lt;- create_initial_view(composition) 
+
+# juxta &amp; para from pathway activity
+path_act_views &lt;- create_initial_view(est_path_act_wide) %&gt;%
+  add_juxtaview(geometry,  neighbor.thr = 130) %&gt;% 
+  add_paraview(geometry, l= 200, family = &quot;gaussian&quot;)
+
+# Combine views
+com_path_act_views &lt;- comp_views %&gt;%
+  add_views(create_view(&quot;juxtaview.path.130&quot;, path_act_views[[&quot;juxtaview.130&quot;]]$data, &quot;juxta.path.130&quot;))%&gt;% 
+  add_views(create_view(&quot;paraview.path.200&quot;, path_act_views[[&quot;paraview.200&quot;]]$data, &quot;para.path.200&quot;)) </code></pre>
+<p>Then run MISTy and collect the results:</p>
+<pre class="r"><code>run_misty(com_path_act_views, &quot;result/comp_path_act&quot;)</code></pre>
+<pre><code>[1] &quot;F:/LabRotationSaez/ProtocolLabRotationSaezRodriguezGroup/result/comp_path_act&quot;</code></pre>
+<pre class="r"><code>misty_results_com_path_act &lt;- collect_results(&quot;result/comp_path_act/&quot;)</code></pre>
+</div>
+<div id="downstream-analysis" class="section level3">
+<h3>Downstream analysis</h3>
+<p>With the collected results, we can now answer the following
+questions:</p>
+<div
+id="to-what-extent-can-the-analyzed-surrounding-tissues-pathway-activities-explain-the-cell-type-composition-of-the-spot-compared-to-the-intraview"
+class="section level4">
+<h4>1. To what extent can the analyzed surrounding tissues’ pathway
+activities explain the cell-type composition of the spot compared to the
+intraview?</h4>
+<p>Here we can look at two different statistics: <code>intra.R2</code>
+shows the variance explained by the intraview alone, and
+<code>gain.R2</code> shows the increase in explainable variance when we
+additionally consider the other views (here juxta and para).</p>
+<pre class="r"><code>misty_results_com_path_act %&gt;%
+  plot_improvement_stats(&quot;intra.R2&quot;)%&gt;%
+  plot_improvement_stats(&quot;gain.R2&quot;) </code></pre>
+<pre><code>Warning: Removed 11 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: Removed 11 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The juxta and paraview particularly increase the explained variance
+for mast cells and adipocytes.</p>
+<p>In general, the significant gain in R2 can be interpreted as the
+following:</p>
+<p>“We can better explain the expression of marker X when we consider
+additional views other than the intrinsic view.”</p>
+<p>To see the individual contributions of the views we can use:</p>
+<pre class="r"><code>misty_results_com_path_act %&gt;% 
+  plot_view_contributions()</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We see, that the intraview explains the most variance for nearly all
+cell types (as expected).</p>
+</div>
+<div
+id="what-are-the-specific-relations-that-can-explain-the-cell-type-composition"
+class="section level4">
+<h4>2. What are the specific relations that can explain the cell-type
+composition?</h4>
+<p>We can individually show the importance of the markers from each
+viewpoint as predictors of the spot intrinsic cell-type composition to
+explain the contributions.</p>
+<p>Let’s look at the juxtaview:</p>
+<pre class="r"><code>misty_results_com_path_act %&gt;%
+  plot_interaction_heatmap(&quot;juxta.path.130&quot;, clean = TRUE)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We observe that TNFa is a significant predictor for adipocytes. We
+can compare their distributions:</p>
+<pre class="r"><code>SpatialFeaturePlot(seurat, features = &quot;tnfa&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DefaultAssay(seurat) &lt;- &quot;c2l_props&quot;
+SpatialFeaturePlot(seurat, features = &quot;Adipocytes&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-15-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We observe similar distributions for both.</p>
+</div>
+</div>
+</div>
+<div id="pathway-activities-on-cell-type-composition---linear-model"
+class="section level2">
+<h2>Pathway activities on cell-type composition - Linear Model</h2>
+<p>The default model used by MISTy to model each view is the random
+forest. However, there are different models to choose from, like the
+faster and more interpretable linear model.</p>
+<p>Another option we haven’t used yet is <code>bypass.intra</code>. With
+this, we bypass training the baseline model that predicts the intraview
+with features from the intraview itself. We will still be able to see
+how the other views explain the intraview. We will use the same view
+composition as before:</p>
+<pre class="r"><code>run_misty(com_path_act_views, &quot;result/comp_path_act_linear&quot;, model.function = linear_model, bypass.intra = TRUE)</code></pre>
+<pre><code>[1] &quot;F:/LabRotationSaez/ProtocolLabRotationSaezRodriguezGroup/result/comp_path_act_linear&quot;</code></pre>
+<pre class="r"><code>misty_results_com_path_act_linear &lt;- collect_results(&quot;result/comp_path_act_linear&quot;)</code></pre>
+<div id="downstream-analysis-1" class="section level3">
+<h3>Downstream analysis</h3>
+<p>Let’s check again the <code>gain.R2</code> and view
+contributions:</p>
+<pre class="r"><code>misty_results_com_path_act_linear %&gt;%
+  plot_improvement_stats(&quot;gain.R2&quot;) %&gt;%
+  plot_view_contributions()</code></pre>
+<pre><code>Warning: Removed 11 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-17-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>For the specific target-predictor interaction, we look again at the
+juxtaview:</p>
+<pre class="r"><code>misty_results_com_path_act_linear %&gt;%
+  plot_interaction_heatmap(&quot;juxta.path.130&quot;, clean = TRUE) </code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Visualize the activity of the JAK-STAT pathway and myeloid
+distribution:</p>
+<pre class="r"><code>SpatialFeaturePlot(seurat, features = &quot;jak.stat&quot;, image.alpha = 0)</code></pre>
+<pre><code>Warning: Could not find jak.stat in the default search locations, found in
+&#39;progeny&#39; assay instead</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DefaultAssay(seurat) &lt;- &quot;c2l_props&quot;
+SpatialFeaturePlot(seurat, features = &quot;Myeloid&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-19-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div
+id="pathway-activities-and-transcriptionfactors-on-cell-type-composition"
+class="section level2">
+<h2>Pathway activities and Transcriptionfactors on cell-type
+composition</h2>
+<p>In addition to the estimated pathway activities, we can also add a
+view to examine the relationship between cell-type composition and TF
+activity. First, we need to estimate the TF activity with decoupler. It
+is recommended to compute it with Python, as it is significantly
+faster:</p>
+<pre class="r"><code>expression_df &lt;- as.data.frame(t(expression))</code></pre>
+<pre class="python"><code># In Python:
+net = dc.get_collectri()
+
+acts_tfs=  dc.run_ulm(
+  mat = r.expression_df,
+  net = net,
+  verbose = True,
+  use_raw = False,
+  )</code></pre>
+<pre><code>Running ulm on mat with 3175 samples and 7241 targets for 545 sources.</code></pre>
+<p>The object with the estimation contains two elements: The first are
+the estimates and their respective p-values can be found in the second
+element.</p>
+<pre class="r"><code>est_TF &lt;- py$acts_tfs</code></pre>
+<p>To speed up the following model training, we calculate the 1000 most
+variable genes expressed. We then extract the TF from the highly
+variable genes to create a MISTy view.</p>
+<pre class="r"><code># Highly variable genes
+hvg &lt;- FindVariableFeatures(expression, selection.method = &quot;vst&quot;, nfeatures = 1000) %&gt;% 
+  filter(variable == TRUE)
+
+hvg_expr &lt;- expression[rownames(hvg), ]
+
+# Extract TF from the highly variable genes
+hvg_TF&lt;- est_TF[[1]][, colnames(est_TF[[1]]) %in% rownames(hvg_expr)]</code></pre>
+<div id="misty-views-1" class="section level3">
+<h3>Misty Views</h3>
+<p>We will combine the intraview from the cell-type composition and
+paraviews from the estimated pathway and TF activities:</p>
+<pre class="r"><code>TF_view &lt;- create_initial_view(hvg_TF) %&gt;%
+  add_paraview(geometry, l = 200)           # This may still take some time
+
+# Combine Views
+comp_TF_path_views &lt;- comp_views %&gt;% add_views(create_view(&quot;paraview.TF.200&quot;, TF_view[[&quot;paraview.200&quot;]]$data, &quot;para.TF.200&quot;)) %&gt;% 
+  add_views(create_view(&quot;paraview.path.200&quot;, path_act_views[[&quot;paraview.200&quot;]]$data, &quot;para.path.200&quot;))
+
+# Run Misty
+run_misty(comp_TF_path_views, &quot;result/comp_TF_path&quot;, model.function = linear_model, bypass.intra = TRUE)</code></pre>
+<pre><code>[1] &quot;F:/LabRotationSaez/ProtocolLabRotationSaezRodriguezGroup/result/comp_TF_path&quot;</code></pre>
+<pre class="r"><code>misty_results_comp_TF_pathway &lt;- collect_results(&quot;result/comp_TF_path&quot;)</code></pre>
+</div>
+<div id="downstream-analysis-2" class="section level3">
+<h3>Downstream analysis</h3>
+<pre class="r"><code>misty_results_comp_TF_pathway %&gt;%
+  plot_improvement_stats(&quot;gain.R2&quot;) %&gt;%
+  plot_view_contributions()</code></pre>
+<pre><code>Warning: Removed 11 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-25-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>When plotting the interaction heatmap, we can restrict the result by
+applying a <code>trim</code>, that only shows targets above a defined
+value for a chosen metric like <code>gain.R2</code>.</p>
+<pre class="r"><code>misty_results_comp_TF_pathway %&gt;%
+  plot_interaction_heatmap(&quot;para.TF.200&quot;, 
+                           clean = TRUE,
+                           trim.measure = &quot;gain.R2&quot;,
+                           trim = 20)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The TF MYC is an important predictor of fibroblasts:</p>
+<pre class="r"><code>DefaultAssay(seurat) &lt;- &quot;SCT&quot;
+SpatialFeaturePlot(seurat, features = &quot;MYC&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DefaultAssay(seurat) &lt;- &quot;c2l_props&quot;
+SpatialFeaturePlot(seurat, features = &quot;Fibroblasts&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-27-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Indeed, we can see a similar distribution.</p>
+</div>
+</div>
+<div id="ligand-receptor" class="section level2">
+<h2>Ligand-Receptor</h2>
+<p>Finally, we want to learn about the spatial relationship of receptors
+and ligands on the tissue slide. We will access the consensus resource
+from <a
+href="https://liana-py.readthedocs.io/en/latest/"><code>LIANA</code></a>
+after downloading it from Github, pulling out the ligands and receptors
+from the before-determined highly variable genes:</p>
+<pre class="r"><code>download.file(&quot;https://raw.githubusercontent.com/saezlab/liana-py/main/liana/resource/omni_resource.csv&quot;, 
+    destfile = &quot;omni_resource.csv&quot;, method = &quot;curl&quot;)
+
+# Ligand Receptor Resource
+omni_resource &lt;- read_csv(&quot;omni_resource.csv&quot;)%&gt;% 
+  filter(resource == &quot;consensus&quot;)
+
+# Get highly variable ligands
+ligands &lt;- omni_resource %&gt;% 
+  pull(source_genesymbol) %&gt;% 
+  unique()
+hvg_lig &lt;- hvg_expr[rownames(hvg_expr) %in% ligands,]
+
+# Get highly variable receptors
+receptors &lt;- omni_resource %&gt;% 
+  pull(target_genesymbol) %&gt;% 
+  unique()
+hvg_recep &lt;- hvg_expr[rownames(hvg_expr) %in% receptors,]
+
+# Clean names
+rownames(hvg_lig) &lt;- hvg_lig %&gt;% 
+  clean_names(parsing_option = 0) %&gt;% 
+  rownames(.)
+
+rownames(hvg_recep) &lt;- hvg_recep %&gt;% clean_names(parsing_option = 0) %&gt;% 
+  rownames(.)</code></pre>
+<div id="misty-views-2" class="section level3">
+<h3>Misty Views</h3>
+<p>We are going to create a combined view with the receptors in the
+intraview as targets and the ligands in the paraview as predictors:</p>
+<pre class="r"><code># Create views and combine them
+receptor_view &lt;- create_initial_view(as.data.frame(t(hvg_lig)))
+
+ligand_view &lt;- create_initial_view(as.data.frame(t(hvg_recep))) %&gt;% 
+  add_paraview(geometry, l = 200, family = &quot;gaussian&quot;)
+
+lig_recep_view &lt;- receptor_view %&gt;% add_views(create_view(&quot;paraview.ligand.200&quot;, ligand_view[[&quot;paraview.200&quot;]]$data, &quot;para.lig.200&quot;))
+
+run_misty(lig_recep_view, &quot;results/lig_recep&quot;, bypass.intra = TRUE)</code></pre>
+<pre><code>[1] &quot;F:/LabRotationSaez/ProtocolLabRotationSaezRodriguezGroup/results/lig_recep&quot;</code></pre>
+<pre class="r"><code>misty_results_lig_recep &lt;- collect_results(&quot;results/lig_recep&quot;)</code></pre>
+</div>
+<div id="downstream-analysis-3" class="section level3">
+<h3>Downstream analysis</h3>
+<p>Let’s look at important interactions. An additional way to reduce the
+number of interactions shown in the heatmap is applying a
+<code>cutoff</code>, that introduces an importance threshold:</p>
+<pre class="r"><code>misty_results_lig_recep %&gt;%
+  plot_interaction_heatmap(&quot;para.lig.200&quot;, clean = TRUE, cutoff = 2, trim.measure =&quot;gain.R2&quot;, trim = 25)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Remember that MISTy does not only infer interactions between ligands
+and their respective receptor, but rather all possible interactions
+between ligands and receptors. We can visualize one of the interactions
+with high importance:</p>
+<pre class="r"><code>DefaultAssay(seurat) &lt;- &quot;SCT&quot;
+SpatialFeaturePlot(seurat, features = &quot;CRLF1&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>SpatialFeaturePlot(seurat, features = &quot;COMP&quot;, image.alpha = 0)</code></pre>
+<p><img src="figure/FunctionalAndStructuralPipeline.Rmd/unnamed-chunk-31-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The plots show a co-occurrence of the ligand and receptor, although
+they are not an annotated receptor-ligand pair.</p>
+</div>
+</div>
+<div id="see-also" class="section level2">
+<h2>See also</h2>
+<p><code>browseVignettes("mistyR")</code></p>
+</div>
+<div id="session-info" class="section level2">
+<h2>Session Info</h2>
+<p>Here is the output of <code>sessionInfo()</code> at the point when
+this document was compiled.</p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
+[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.utf8    
+
+time zone: Europe/Berlin
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] distances_0.1.10   janitor_2.2.0      decoupleR_2.8.0    lubridate_1.9.3   
+ [5] forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4        purrr_1.0.2       
+ [9] readr_2.1.5        tidyr_1.3.0        tibble_3.2.1       ggplot2_3.5.0     
+[13] tidyverse_2.0.0    Seurat_5.0.1       SeuratObject_5.0.1 sp_2.1-2          
+[17] reticulate_1.34.0  mistyR_1.10.0      workflowr_1.7.1   
+
+loaded via a namespace (and not attached):
+  [1] RcppAnnoy_0.0.21       splines_4.3.2          later_1.3.2           
+  [4] filelock_1.0.3         R.oo_1.26.0            cellranger_1.1.0      
+  [7] polyclip_1.10-6        hardhat_1.3.1          pROC_1.18.5           
+ [10] rpart_4.1.23           fastDummies_1.7.3      lifecycle_1.0.4       
+ [13] rprojroot_2.0.4        globals_0.16.3         processx_3.8.3        
+ [16] lattice_0.22-5         vroom_1.6.5            MASS_7.3-60           
+ [19] backports_1.4.1        magrittr_2.0.3         plotly_4.10.3         
+ [22] sass_0.4.8             rmarkdown_2.25         jquerylib_0.1.4       
+ [25] yaml_2.3.8             rlist_0.4.6.2          httpuv_1.6.13         
+ [28] sctransform_0.4.1      spam_2.10-0            spatstat.sparse_3.0-3 
+ [31] cowplot_1.1.2          pbapply_1.7-2          RColorBrewer_1.1-3    
+ [34] abind_1.4-5            rvest_1.0.3            Rtsne_0.17            
+ [37] R.utils_2.12.3         nnet_7.3-19            rappdirs_0.3.3        
+ [40] ipred_0.9-14           git2r_0.33.0           lava_1.8.0            
+ [43] ggrepel_0.9.4          irlba_2.3.5.1          listenv_0.9.1         
+ [46] spatstat.utils_3.0-4   goftest_1.2-3          RSpectra_0.16-1       
+ [49] spatstat.random_3.2-2  fitdistrplus_1.1-11    parallelly_1.37.1     
+ [52] leiden_0.4.3.1         codetools_0.2-19       xml2_1.3.6            
+ [55] tidyselect_1.2.0       farver_2.1.1           stats4_4.3.2          
+ [58] matrixStats_1.2.0      spatstat.explore_3.2-5 jsonlite_1.8.8        
+ [61] caret_6.0-94           ellipsis_0.3.2         progressr_0.14.0      
+ [64] iterators_1.0.14       ggridges_0.5.5         survival_3.5-7        
+ [67] foreach_1.5.2          tools_4.3.2            progress_1.2.3        
+ [70] ica_1.0-3              Rcpp_1.0.11            glue_1.6.2            
+ [73] prodlim_2023.08.28     gridExtra_2.3          ranger_0.16.0         
+ [76] xfun_0.41              here_1.0.1             withr_3.0.0           
+ [79] fastmap_1.1.1          fansi_1.0.6            callr_3.7.3           
+ [82] digest_0.6.33          timechange_0.3.0       R6_2.5.1              
+ [85] mime_0.12              colorspace_2.1-0       scattermore_1.2       
+ [88] tensor_1.5             spatstat.data_3.0-3    R.methodsS3_1.8.2     
+ [91] utf8_1.2.4             generics_0.1.3         recipes_1.0.10        
+ [94] data.table_1.15.2      class_7.3-22           ridge_3.3             
+ [97] prettyunits_1.2.0      httr_1.4.7             htmlwidgets_1.6.4     
+[100] whisker_0.4.1          ModelMetrics_1.2.2.2   uwot_0.1.16           
+[103] pkgconfig_2.0.3        gtable_0.3.4           timeDate_4032.109     
+[106] lmtest_0.9-40          selectr_0.4-2          furrr_0.3.1           
+[109] OmnipathR_3.10.1       htmltools_0.5.7        dotCall64_1.1-1       
+[112] scales_1.3.0           png_0.1-8              gower_1.0.1           
+[115] snakecase_0.11.1       knitr_1.45             rstudioapi_0.15.0     
+[118] tzdb_0.4.0             reshape2_1.4.4         checkmate_2.3.1       
+[121] nlme_3.1-164           curl_5.2.0             cachem_1.0.8          
+[124] zoo_1.8-12             KernSmooth_2.23-22     parallel_4.3.2        
+[127] miniUI_0.1.1.1         pillar_1.9.0           grid_4.3.2            
+[130] logger_0.2.2           vctrs_0.6.5            RANN_2.6.1            
+[133] promises_1.2.1         xtable_1.8-4           cluster_2.1.6         
+[136] archive_1.1.7          evaluate_0.23          cli_3.6.2             
+[139] compiler_4.3.2         rlang_1.1.2            crayon_1.5.2          
+[142] future.apply_1.11.1    labeling_0.4.3         ps_1.7.5              
+[145] getPass_0.2-4          plyr_1.8.9             fs_1.6.3              
+[148] stringi_1.8.3          viridisLite_0.4.2      deldir_2.0-4          
+[151] assertthat_0.2.1       munsell_0.5.0          lazyeval_0.2.2        
+[154] spatstat.geom_3.2-7    Matrix_1.6-4           RcppHNSW_0.5.0        
+[157] hms_1.1.3              patchwork_1.2.0.9000   bit64_4.0.5           
+[160] future_1.33.1          shiny_1.8.0            highr_0.10            
+[163] ROCR_1.0-11            igraph_1.6.0           bslib_0.6.1           
+[166] bit_4.0.5              readxl_1.4.3          </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
+[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.utf8    
+
+time zone: Europe/Berlin
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] distances_0.1.10   janitor_2.2.0      decoupleR_2.8.0    lubridate_1.9.3   
+ [5] forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4        purrr_1.0.2       
+ [9] readr_2.1.5        tidyr_1.3.0        tibble_3.2.1       ggplot2_3.5.0     
+[13] tidyverse_2.0.0    Seurat_5.0.1       SeuratObject_5.0.1 sp_2.1-2          
+[17] reticulate_1.34.0  mistyR_1.10.0      workflowr_1.7.1   
+
+loaded via a namespace (and not attached):
+  [1] RcppAnnoy_0.0.21       splines_4.3.2          later_1.3.2           
+  [4] filelock_1.0.3         R.oo_1.26.0            cellranger_1.1.0      
+  [7] polyclip_1.10-6        hardhat_1.3.1          pROC_1.18.5           
+ [10] rpart_4.1.23           fastDummies_1.7.3      lifecycle_1.0.4       
+ [13] rprojroot_2.0.4        globals_0.16.3         processx_3.8.3        
+ [16] lattice_0.22-5         vroom_1.6.5            MASS_7.3-60           
+ [19] backports_1.4.1        magrittr_2.0.3         plotly_4.10.3         
+ [22] sass_0.4.8             rmarkdown_2.25         jquerylib_0.1.4       
+ [25] yaml_2.3.8             rlist_0.4.6.2          httpuv_1.6.13         
+ [28] sctransform_0.4.1      spam_2.10-0            spatstat.sparse_3.0-3 
+ [31] cowplot_1.1.2          pbapply_1.7-2          RColorBrewer_1.1-3    
+ [34] abind_1.4-5            rvest_1.0.3            Rtsne_0.17            
+ [37] R.utils_2.12.3         nnet_7.3-19            rappdirs_0.3.3        
+ [40] ipred_0.9-14           git2r_0.33.0           lava_1.8.0            
+ [43] ggrepel_0.9.4          irlba_2.3.5.1          listenv_0.9.1         
+ [46] spatstat.utils_3.0-4   goftest_1.2-3          RSpectra_0.16-1       
+ [49] spatstat.random_3.2-2  fitdistrplus_1.1-11    parallelly_1.37.1     
+ [52] leiden_0.4.3.1         codetools_0.2-19       xml2_1.3.6            
+ [55] tidyselect_1.2.0       farver_2.1.1           stats4_4.3.2          
+ [58] matrixStats_1.2.0      spatstat.explore_3.2-5 jsonlite_1.8.8        
+ [61] caret_6.0-94           ellipsis_0.3.2         progressr_0.14.0      
+ [64] iterators_1.0.14       ggridges_0.5.5         survival_3.5-7        
+ [67] foreach_1.5.2          tools_4.3.2            progress_1.2.3        
+ [70] ica_1.0-3              Rcpp_1.0.11            glue_1.6.2            
+ [73] prodlim_2023.08.28     gridExtra_2.3          ranger_0.16.0         
+ [76] xfun_0.41              here_1.0.1             withr_3.0.0           
+ [79] fastmap_1.1.1          fansi_1.0.6            callr_3.7.3           
+ [82] digest_0.6.33          timechange_0.3.0       R6_2.5.1              
+ [85] mime_0.12              colorspace_2.1-0       scattermore_1.2       
+ [88] tensor_1.5             spatstat.data_3.0-3    R.methodsS3_1.8.2     
+ [91] utf8_1.2.4             generics_0.1.3         recipes_1.0.10        
+ [94] data.table_1.15.2      class_7.3-22           ridge_3.3             
+ [97] prettyunits_1.2.0      httr_1.4.7             htmlwidgets_1.6.4     
+[100] whisker_0.4.1          ModelMetrics_1.2.2.2   uwot_0.1.16           
+[103] pkgconfig_2.0.3        gtable_0.3.4           timeDate_4032.109     
+[106] lmtest_0.9-40          selectr_0.4-2          furrr_0.3.1           
+[109] OmnipathR_3.10.1       htmltools_0.5.7        dotCall64_1.1-1       
+[112] scales_1.3.0           png_0.1-8              gower_1.0.1           
+[115] snakecase_0.11.1       knitr_1.45             rstudioapi_0.15.0     
+[118] tzdb_0.4.0             reshape2_1.4.4         checkmate_2.3.1       
+[121] nlme_3.1-164           curl_5.2.0             cachem_1.0.8          
+[124] zoo_1.8-12             KernSmooth_2.23-22     parallel_4.3.2        
+[127] miniUI_0.1.1.1         pillar_1.9.0           grid_4.3.2            
+[130] logger_0.2.2           vctrs_0.6.5            RANN_2.6.1            
+[133] promises_1.2.1         xtable_1.8-4           cluster_2.1.6         
+[136] archive_1.1.7          evaluate_0.23          cli_3.6.2             
+[139] compiler_4.3.2         rlang_1.1.2            crayon_1.5.2          
+[142] future.apply_1.11.1    labeling_0.4.3         ps_1.7.5              
+[145] getPass_0.2-4          plyr_1.8.9             fs_1.6.3              
+[148] stringi_1.8.3          viridisLite_0.4.2      deldir_2.0-4          
+[151] assertthat_0.2.1       munsell_0.5.0          lazyeval_0.2.2        
+[154] spatstat.geom_3.2-7    Matrix_1.6-4           RcppHNSW_0.5.0        
+[157] hms_1.1.3              patchwork_1.2.0.9000   bit64_4.0.5           
+[160] future_1.33.1          shiny_1.8.0            highr_0.10            
+[163] ROCR_1.0-11            igraph_1.6.0           bslib_0.6.1           
+[166] bit_4.0.5              readxl_1.4.3          </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

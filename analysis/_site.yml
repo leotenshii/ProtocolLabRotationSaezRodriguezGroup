@@ -1,22 +1,10 @@
 name: ProtocolLabRotationSaezRodriguezGroup
 output_dir: ../docs
 navbar:
-  title: Protocol for my lab-rotation with the Saez Rodriguez group
+  title: ProtocolLabRotationSaezRodriguezGroup
   left:
-  - text: Table of contents
+  - text: Home
     href: index.html
-  - text: Structural analysis with MISTy - based on cell2location deconvolution
-    href: MistyRStructuralAnalysisPipelineC2L.Rmd
-  - text: Structural analysis with MISTy - based on DOT deconvolution
-    href: MistyRStructuralAnalysisPipelineDOT.Rmd
-  - text: Functional analysis with MISTy - pathway specific genes
-    href: FunctionalPipelinePathwaySpecific.Rmd
-  - text: Functional analysis with MISTy - pathway activity and ligand expression
-    href: FunctionalPipelinePathwayActivityLigands.Rmd
-  - text: Learning functional and structural spatial relationships with MISTy
-    href: FunctionalAndStructuralPipeline.Rmd
-  - text: MISTy representation based analysis of IMC breast cancer data
-    href: ReproduceSignaturePaper.Rmd
   - text: About
     href: about.html
   - text: License
@@ -29,5 +17,5 @@ output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
-    theme: sandstone
+    theme: cosmo
     highlight: textmate

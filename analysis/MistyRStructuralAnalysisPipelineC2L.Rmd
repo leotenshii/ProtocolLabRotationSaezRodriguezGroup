@@ -54,15 +54,15 @@ For this showcase, we use a 10X Visium spatial slide from [Kuppe et al., 2022](h
 
 ```{r}
 download.file("https://zenodo.org/records/6580069/files/10X_Visium_ACH005.tar.gz?download=1",
-    destfile = "data/10X_Visium_ACH005.tar.gz", method = "curl")
-untar("data/10X_Visium_ACH005.tar.gz")
+    destfile = "10X_Visium_ACH005.tar.gz", method = "curl")
+untar("10X_Visium_ACH005.tar.gz")
 ```
 
 The next step is to load the data and extract the cell composition and location of the spots. The rows are shifted, which means that the real distances between two spots are not always the same. It is therefore advantageous to use the pixel coordinates instead of row and column numbers, as the distances between these are represented accurately.
 
 ```{r}
 # Load file into R
-seurat_vs <- readRDS("data/ACH005/ACH005.rds")
+seurat_vs <- readRDS("ACH005/ACH005.rds")
 
 # Extract the cell composition
 composition <- as_tibble(t(seurat_vs[["c2l_props"]]$data)) 
@@ -101,9 +101,9 @@ heart_views <- create_initial_view(composition) %>%
   add_paraview(geometry, l= paraview_radius, family = "gaussian")
 
 # Run misty and collect results
-run_misty(heart_views, "data/result/vignette_structural_pipeline")
+run_misty(heart_views, "result/vignette_structural_pipeline")
 
-misty_results <- collect_results("data/result/vignette_structural_pipeline")
+misty_results <- collect_results("result/vignette_structural_pipeline")
 ```
 
 ## Downstream Analysis

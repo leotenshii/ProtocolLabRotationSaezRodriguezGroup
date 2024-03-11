@@ -53,17 +53,17 @@ plan(multisession, workers = 6)
 
 #Data 
 download.file("https://www.dropbox.com/scl/fi/yolsq97ouc7ay8wvdibp6/imc_bc_optim_zoi.RDS?rlkey=txu88dec23mtw7tfy99e7ucb0&dl=1",
-              destfile = "data/imc_bc_optim_zoi.RDS", 
+              destfile = "imc_bc_optim_zoi.RDS", 
               method = "auto",
               mode = "wb")
 
 download.file("https://www.dropbox.com/scl/fi/h19svd580yxmue5x2c3he/bc_metadata.tsv?rlkey=j08v6ivjqz5uwn8ldjjbs4f5j&dl=1", 
-              destfile = "data/bc_metadata.tsv", 
+              destfile = "bc_metadata.tsv", 
               method = "auto",
               mode = "wb")
 
-bc_results <- readRDS("data/imc_bc_optim_zoi.RDS")
-meta <- read_delim("data/bc_metadata.tsv", delim = "\t")
+bc_results <- readRDS("imc_bc_optim_zoi.RDS")
+meta <- read_delim("bc_metadata.tsv", delim = "\t")
 ```
 
 ## Performance signature

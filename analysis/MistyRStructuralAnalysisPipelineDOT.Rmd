@@ -58,14 +58,14 @@ For this showcase, we use a 10X Visium spatial slide from [Kuppe et al., 2022](h
 ```{r}
 # Download the data
 download.file("https://zenodo.org/records/6580069/files/10X_Visium_ACH005.tar.gz?download=1",
-    destfile = "data/10X_Visium_ACH005.tar.gz", method = "curl")
-untar("data/10X_Visium_ACH005.tar.gz")
+    destfile = "10X_Visium_ACH005.tar.gz", method = "curl")
+untar("10X_Visium_ACH005.tar.gz")
 ```
 
 The next step is to load the data and extract the location of the spots. The rows are shifted, which means that the real distances between two spots are not always the same. It is therefore advantageous to use the pixel coordinates instead of row and column numbers, as the distances between these are represented accurately.
 
 ```{r}
-spatial_data <- readRDS("data/ACH005/ACH005.rds")
+spatial_data <- readRDS("ACH005/ACH005.rds")
 
 geometry <- GetTissueCoordinates(spatial_data, cols = c("imagerow", "imagecol"), scale = NULL)
 ```
@@ -74,14 +74,14 @@ For deconvolution, we additionally need a reference single-cell data set contain
 
 ```{r}
 download.file("https://www.dropbox.com/scl/fi/sq24xaavxplkc98iimvpz/hca_p14.rds?rlkey=h8cyxzhypavkydbv0z3pqadus&dl=1",
-              destfile = "data/hca_p14.rds",
+              destfile = "hca_p14.rds",
               mode = "wb")
 ```
 
 Now load the data. From this, we retrieve a gene x cell count matrix and the respective cell annotations.
 
 ```{r message=FALSE}
-ref_data <- readRDS("data/hca_p14.rds")
+ref_data <- readRDS("hca_p14.rds")
 
 ref_counts_P14 <- ref_data$counts
 ref_ct <- ref_data$celltypes
@@ -145,9 +145,9 @@ heart_views <- create_initial_view(as.data.frame(DOT_weights)) %>%
   add_paraview(geometry, l= paraview_radius, family = "gaussian")
 
 # Run misty and collect results
-run_misty(heart_views, "data/result/vignette_structural_pipeline")
+run_misty(heart_views, "result/vignette_structural_pipeline")
 
-misty_results <- collect_results("data/result/vignette_structural_pipeline")
+misty_results <- collect_results("result/vignette_structural_pipeline")
 ```
 
 ## Downstream Analysis

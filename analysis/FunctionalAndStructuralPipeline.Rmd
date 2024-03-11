@@ -65,14 +65,14 @@ For this showcase, we use a 10X Visium spatial slide from [Kuppe et al., 2022](h
 
 ```{r}
 download.file("https://zenodo.org/records/6580069/files/10X_Visium_ACH005.tar.gz?download=1",
-    destfile = "data/10X_Visium_ACH005.tar.gz", method = "curl")
-untar("data/10X_Visium_ACH005.tar.gz")
+    destfile = "10X_Visium_ACH005.tar.gz", method = "curl")
+untar("10X_Visium_ACH005.tar.gz")
 ```
 
 The next step is to load the data, extract the normalized gene counts of genes expressed in at least 5% of the spots, and pixel coordinates. It is recommended to use pixel coordinates instead of row and column numbers since the rows are shifted and therefore do not express the real distance between the spots.
 
 ```{r}
-seurat <- readRDS("data/ACH005/ACH005.rds")
+seurat <- readRDS("ACH005/ACH005.rds")
 expression_raw <- as.matrix(GetAssayData(seurat, layer = "counts", assay = "SCT"))
 geometry <- GetTissueCoordinates(seurat, scale = NULL)
 
@@ -173,8 +173,8 @@ com_path_act_views <- comp_views %>%
 Then run MISTy and collect the results:
 
 ```{r message=FALSE, warning=FALSE}
-run_misty(com_path_act_views, "data/result/comp_path_act")
-misty_results_com_path_act <- collect_results("data/result/comp_path_act/")
+run_misty(com_path_act_views, "result/comp_path_act")
+misty_results_com_path_act <- collect_results("result/comp_path_act/")
 ```
 
 ### Downstream analysis
@@ -234,8 +234,8 @@ The default model used by MISTy to model each view is the random forest. However
 Another option we haven't used yet is `bypass.intra`. With this, we bypass training the baseline model that predicts the intraview with features from the intraview itself. We will still be able to see how the other views explain the intraview. We will use the same view composition as before:
 
 ```{r message=FALSE, warning=FALSE}
-run_misty(com_path_act_views, "data/result/comp_path_act_linear", model.function = linear_model, bypass.intra = TRUE)
-misty_results_com_path_act_linear <- collect_results("data/result/comp_path_act_linear")
+run_misty(com_path_act_views, "result/comp_path_act_linear", model.function = linear_model, bypass.intra = TRUE)
+misty_results_com_path_act_linear <- collect_results("result/comp_path_act_linear")
 ```
 
 ### Downstream analysis
@@ -315,8 +315,8 @@ comp_TF_path_views <- comp_views %>% add_views(create_view("paraview.TF.200", TF
   add_views(create_view("paraview.path.200", path_act_views[["paraview.200"]]$data, "para.path.200"))
 
 # Run Misty
-run_misty(comp_TF_path_views, "data/result/comp_TF_path", model.function = linear_model, bypass.intra = TRUE)
-misty_results_comp_TF_pathway <- collect_results("data/result/comp_TF_path")
+run_misty(comp_TF_path_views, "result/comp_TF_path", model.function = linear_model, bypass.intra = TRUE)
+misty_results_comp_TF_pathway <- collect_results("result/comp_TF_path")
 ```
 
 ### Downstream analysis
@@ -354,10 +354,10 @@ Finally, we want to learn about the spatial relationship of receptors and ligand
 
 ```{r message=FALSE, warning=FALSE}
 download.file("https://raw.githubusercontent.com/saezlab/liana-py/main/liana/resource/omni_resource.csv", 
-    destfile = "data/omni_resource.csv", method = "curl")
+    destfile = "omni_resource.csv", method = "curl")
 
 # Ligand Receptor Resource
-omni_resource <- read_csv("data/omni_resource.csv")%>% 
+omni_resource <- read_csv("omni_resource.csv")%>% 
   filter(resource == "consensus")
 
 # Get highly variable ligands
@@ -394,8 +394,8 @@ ligand_view <- create_initial_view(as.data.frame(t(hvg_recep))) %>%
 
 lig_recep_view <- receptor_view %>% add_views(create_view("paraview.ligand.200", ligand_view[["paraview.200"]]$data, "para.lig.200"))
 
-run_misty(lig_recep_view, "data/result/lig_recep", bypass.intra = TRUE)
-misty_results_lig_recep <- collect_results("data/result/lig_recep")
+run_misty(lig_recep_view, "results/lig_recep", bypass.intra = TRUE)
+misty_results_lig_recep <- collect_results("results/lig_recep")
 ```
 
 ### Downstream analysis

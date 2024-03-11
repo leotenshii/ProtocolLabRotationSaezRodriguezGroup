@@ -6,17 +6,17 @@ navbar:
   - text: Table of contents
     href: index.html
   - text: Structural analysis with MISTy - based on cell2location deconvolution
-    href: MistyRStructuralAnalysisPipelineC2L.Rmd
+    href: MistyRStructuralAnalysisPipelineC2L.html
   - text: Structural analysis with MISTy - based on DOT deconvolution
-    href: MistyRStructuralAnalysisPipelineDOT.Rmd
+    href: MistyRStructuralAnalysisPipelineDOT.html
   - text: Functional analysis with MISTy - pathway specific genes
-    href: FunctionalPipelinePathwaySpecific.Rmd
+    href: FunctionalPipelinePathwaySpecific.html
   - text: Functional analysis with MISTy - pathway activity and ligand expression
-    href: FunctionalPipelinePathwayActivityLigands.Rmd
+    href: FunctionalPipelinePathwayActivityLigands.html
   - text: Learning functional and structural spatial relationships with MISTy
-    href: FunctionalAndStructuralPipeline.Rmd
+    href: FunctionalAndStructuralPipeline.html
   - text: MISTy representation based analysis of IMC breast cancer data
-    href: ReproduceSignaturePaper.Rmd
+    href: ReproduceSignaturePaper.html
   - text: About
     href: about.html
   - text: License

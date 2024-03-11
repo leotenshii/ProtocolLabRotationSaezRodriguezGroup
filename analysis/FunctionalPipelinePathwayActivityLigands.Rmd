@@ -55,14 +55,14 @@ For this showcase, we use a 10X Visium spatial slide from [Kuppe et al., 2022](h
 
 ```{r}
 download.file("https://zenodo.org/records/6580069/files/10X_Visium_ACH005.tar.gz?download=1",
-    destfile = "10X_Visium_ACH005.tar.gz", method = "curl")
-untar("10X_Visium_ACH005.tar.gz")
+    destfile = "data/10X_Visium_ACH005.tar.gz", method = "curl")
+untar("data/10X_Visium_ACH005.tar.gz")
 ```
 
 The next step is to load the data, extract the normalized gene counts, names of genes expressed in at least 5% of the spots, and pixel coordinates. It is recommended to use pixel coordinates instead of row and column numbers since the rows are shifted and therefore do not express the real distance between the spots.
 
 ```{r}
-seurat_vs <- readRDS("ACH005/ACH005.rds")
+seurat_vs <- readRDS("data/ACH005/ACH005.rds")
 
 expression <- as.matrix(GetAssayData(seurat_vs, layer = "counts", assay = "SCT"))
 gene_names <- rownames(expression[(rowSums(expression > 0) / ncol(expression)) >= 0.05,]) 
@@ -154,9 +154,9 @@ combined_views <- pathway_act_view %>% add_views(create_view("paraview.ligand.10
 Then run MISTy and collect the results:
 
 ```{r message=FALSE, warning=FALSE}
-run_misty(combined_views, "result/functional_ligand")
+run_misty(combined_views, "data/result/functional_ligand")
 
-misty_results <- collect_results("result/functional_ligand/")
+misty_results <- collect_results("data/result/functional_ligand/")
 ```
 
 ## Downstream analysis

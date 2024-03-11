@@ -34,6 +34,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
@@ -232,6 +233,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -334,23 +338,32 @@ div.tocify {
         <li>
   <a href="index.html">Table of contents</a>
 </li>
-<li>
-  <a href="MistyRStructuralAnalysisPipelineC2L.Rmd">Structural analysis with MISTy - based on cell2location deconvolution</a>
-</li>
-<li>
-  <a href="MistyRStructuralAnalysisPipelineDOT.Rmd">Structural analysis with MISTy - based on DOT deconvolution</a>
-</li>
-<li>
-  <a href="FunctionalPipelinePathwaySpecific.Rmd">Functional analysis with MISTy - pathway specific genes</a>
-</li>
-<li>
-  <a href="FunctionalPipelinePathwayActivityLigands.Rmd">Functional analysis with MISTy - pathway activity and ligand expression</a>
-</li>
-<li>
-  <a href="FunctionalAndStructuralPipeline.Rmd">Learning functional and structural spatial relationships with MISTy</a>
-</li>
-<li>
-  <a href="ReproduceSignaturePaper.Rmd">MISTy representation based analysis of IMC breast cancer data</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Vignettes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="MistyRStructuralAnalysisPipelineC2L.html">Structural analysis with MISTy - based on cell2location deconvolution</a>
+    </li>
+    <li>
+      <a href="MistyRStructuralAnalysisPipelineDOT.html">Structural analysis with MISTy - based on DOT deconvolution</a>
+    </li>
+    <li>
+      <a href="FunctionalPipelinePathwaySpecific.html">Functional analysis with MISTy - pathway specific genes</a>
+    </li>
+    <li>
+      <a href="FunctionalPipelinePathwayActivityLigands.html">Functional analysis with MISTy - pathway activity and ligand expression</a>
+    </li>
+    <li>
+      <a href="FunctionalAndStructuralPipeline.html">Learning functional and structural spatial relationships with MISTy</a>
+    </li>
+    <li>
+      <a href="ReproduceSignaturePaper.html">MISTy representation based analysis of IMC breast cancer data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -373,6 +386,14 @@ div.tocify {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -550,15 +571,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree64a10dc38624eeac0aa87a75833812477f292207targetblank64a10dca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree9fe1532ad7fc9c177a28df9f9523a749ba802ac1targetblank9fe1532a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/64a10dc38624eeac0aa87a75833812477f292207" target="_blank">64a10dc</a>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/9fe1532ad7fc9c177a28df9f9523a749ba802ac1" target="_blank">9fe1532</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree64a10dc38624eeac0aa87a75833812477f292207targetblank64a10dca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree9fe1532ad7fc9c177a28df9f9523a749ba802ac1targetblank9fe1532a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -568,7 +589,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/64a10dc38624eeac0aa87a75833812477f292207" target="_blank">64a10dc</a>.
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/9fe1532ad7fc9c177a28df9f9523a749ba802ac1" target="_blank">9fe1532</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -639,6 +660,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/a7395df3c5d4587a58b355fc43136ef47cb5ff9c/docs/ReproduceSignaturePaper.html" target="_blank">a7395df</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1288,6 +1326,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

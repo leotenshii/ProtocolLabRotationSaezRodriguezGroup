@@ -9,3 +9,4 @@ editor_options:
 ---
 
 Welcome to my research website.
+[Learning functional and structural spatial relationships with MISTy](FunctionalAndStructuralPipeline.html)

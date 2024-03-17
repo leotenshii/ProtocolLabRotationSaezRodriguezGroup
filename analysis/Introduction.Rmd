@@ -1,0 +1,68 @@
+---
+title: "Introduction"
+author:
+- name: Leoni Zimmermann
+  affiliation:
+    - Heidelberg University, Heidelberg, Germany
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+bibliography: references.bib
+csl: science.csl
+link-citations: yes
+---
+
+## General
+
+Single-cell technologies have revolutionized the understanding of cellular processes, by enabling the discovery of new gene regulation mechanisms and protein expression dynamics. A significant limitation of single-cell methods is that they take the cells out of the spatial context, which is thus lost, and prevents unraveling the complex interplay between cells in tissues. To address this challenge, spatial omics methods have emerged enabling the analysis of different biomolecules directly in tissue samples, conserving the spatial context. These methods bridge the gap between single-cell resolution and spatial information and provide invaluable insights into cellular interactions, tissue structure, and disease mechanisms. In this context, spatial transcriptomics and spatial proteomics have proven to be powerful tools for analyzing the spatial organization of RNA and proteins in tissues.
+
+## Spatial transcriptomics
+
+Spatial transcriptomics allows for analyzing RNA-seq data at a spatial level. This is possible through capturing both the spatial context and transcriptional patterns at the same time. Yue et al. [@ReviewSpatialTranscriptomics] categorize the methods into four groups.
+
+In situ hybridization-based technologies use labeled complementary probes to bind and detect specific mRNA targets in tissue samples. The second group includes in situ sequencing-based technologies. RNA molecules are sequenced directly in the tissue sample. Various methods can be used in this process, such as RNA reverse transcription, cDNA cyclization, and rolling-circle amplification. Next generation sequencing-based technologies form the next group. These technologies capture RNA in tissue sections through RNA-capturing slides or DNA barcoding. The last group is the spatial information reconstruction technologies that combine RNA sequencing with computational methods like image reconstruction or iterative algorithms.
+
+Choosing the appropriate spatial transcriptomic technology involves weighing factors such as gene throughput, sensitivity, resolution, and feasibility against each other. Therefore, it is all the more important to know the advantages and limitations of the methods to choose the right one for an experiment.
+
+### Visium 10x
+
+Visium [@Visium] is a spatial transcriptomics technology provided by 10x Genomics. It belongs to the group of Next generation sequencing-based technologies working with RNA-capturing slides. Tissue sections are placed on a special slide with capture areas. Each of these capture areas contains 5000 barcoded spots. The tissue sample is then stained and imaged routinely. Subsequently, the tissue sample is fixed and permeabilized, allowing the capture of RNA on the probes in the capture areas. Then, the RNA is sequenced, and a sequencing library is constructed. This way, the transcripts can be linked to their respective location on the tissue slide.
+
+Visium can profile the whole transcriptome with a spatial resolution of 55µm, corresponding to the size of a spot. Therefore, it can not provide single-cell resolution since eukaryotic cells have an average measure of 10µm. Further, its RNA capturing efficiency is relatively low [@VisiumAdvantagesDisadvantages]. Still, Visium is one of the most popular commercially available spatial transcriptomics assays.
+
+## Spatial Proteomics
+
+Spatial proteomics enables the analysis of protein localization within tissues, providing insights into their spatial patterns. Image-based methods visualize protein locations in the tissues through specific targeting with antibodies [@SpatialProteomics]. The review groups the methods in cyclic fluorescent and one-step mass-tag procedures. Both are based on the same principle of antibody tagging with fluorophores, DNA barcodes, enzymes, or metal tags and subsequent fluorescence imaging or mass spectrometry.
+
+Cyclic fluorescent approaches work by staining, imaging, and extinguishing the signal, which is repeated for each protein to be measured. Only one round of staining is needed when antibodies are DNA-barcoded, making the assay faster. In contrast, one-step mass-tag methods work without cycling but with one-time immunostaining and detection. The applied antibodies are conjugated with ionizable metal mass tags. Following the staining, mass spectrometry is used for data acquisition. These methods have the advantage of being more robust than cyclic fluorescent methods but also have the disadvantage of being more expensive.
+
+In comparison to spatial transcriptomics, these methods provide a better estimation of cellular activity as RNA levels and protein levels do not always correlate.
+
+### Image Mass Cytometry (IMC)
+
+IMC [@IMC] belongs to the group of one-step mass-tag technologies. The tissue is stained with antibodies tagged with a unique rare-earth-metal isotope. The tissue is then ablated in a grid using a laser with a spot size of 1 µm. The ablated tissue is then transferred to a CyTOF mass cytometer. The signal of the individual isotopes is extracted for all measured markers, plotted according to the spot coordinates, and layered to create a high-dimensional image. In the final step, a single-cell segmentation is performed before the downstream data analysis.
+
+IMC can image up to 40 markers simultaneously. It is estimated that it will be possible to image over 100 markers in the future. IMC is also faster than comparable methods such as Multiplexed Ion Beam Imaging (MIBI) but at the expense of an increased spot size.
+
+## MISTy
+
+As the number of spatial omics methods increases, so does the number of applications for analyzing them. Examples are tools for neighborhood analysis (e.g. Squidpy [@Squidpy]), finding spatial variable genes (e.g. SpatialDE [@SpatialDE]), or spatial deconvolution (e.g. Cell2location [@C2L]). Discovering interesting spatial patterns through these methods raises questions about the interactions that create them. One approach to answering this question involves the R package MISTy (Multiview Intercellular SpaTial modeling framework) [@MISTy].
+
+MISTy uses an explainable machine learning algorithm to analyze spatial omics data sets within and between spatial contexts called views. The baseline of the model is the intraview that captures the relationships within the spatial unit, be it a spot or a cell. Adding further views is optional. Two built-in views that consider spatial context are juxtaview and paraview. The juxtaview considers all marker expressions in the close neighbors of a spatial unit, while the paraview includes the marker expressions in the broader tissue weighted by their distance to the spatial unit. The user can set the radius of these views and add custom views. Then, for each view, the expression of a marker is predicted based on the expression of all other markers in the spatial context of the view. By default, this is modeled by a random forest, but other algorithms are available. In the second step, the contribution of each view in predicting the marker expression is estimated by ridge regression of the beforehand obtained results. The output contains performance, contribution, and importance estimations. The downstream analysis can provide answers to the following questions:
+
+1.  To what extent can the analyzed marker expression from surrounding tissues explain the marker expression of the spot? How does it compare to the estimation of the intraview alone? There are three different statistics to look at: R2 (the fraction of variance explained) by the intraview and the multiview model and the resulting gain in R2 from the non-intraviews. This can be used to determine which marker expressions are better explained when influences from outside the spot are taken into account. Furthermore, it can be visualized which view has how much influence on the improved prediction.
+
+2.  What are the specific relations that can explain the contributions? To explain the contributions, the importance of each marker in predicting all marker expressions is visualized separately for each view. Interesting predictor-target pairs can then be visualized and analyzed further with different tools.
+
+3.  What drives differences in the performance/contribution/importance measurements? After training the model, in the result space, these samples are represented by a vector consisting of the sample signatures. There are three signatures: performance, contribution, and importance. Based on the signatures, causes for differences in performance metrics between the samples can be analyzed. This is done by performing PCA on the signatures and finding factors responsible for the clustering of the samples.
+
+## My project
+
+The goal of my project was to add new vignettes for the MISTy package since they are the most frequently accessed part of the MISTy website. I have written a total of six vignettes that show how to answer the three questions described above.
+
+For five of the vignettes, I have used a Visium 10X dataset from Kuppe et al. [@VisiumHeart]. They generated a comprehensive map of cardiac remodeling following myocardial infarction in humans. Multimodal data integration of single-cell gene expression, chromatin accessibility, and spatial transcriptomic data was performed to determine, for example, cell type composition. I selected patient 14's (P14) data for the vignettes. Two of the vignettes are about structural relationships, where I analyze the tissue slide based on the cell type distribution. The other three are about functional relationships, where I analyze the spatial patterns of the markers. Selected markers are for example receptors, ligands, or pathway-specific genes.
+
+The sixth vignette demonstrates the sample signature analysis on an IMC dataset [@IMCBC] of tumors of three different grades, measuring 26 protein markers. In the vignette, I show how the samples can be distinguished by their signatures and that this grouping is similar to that by grade or clinical type.
+
+## References

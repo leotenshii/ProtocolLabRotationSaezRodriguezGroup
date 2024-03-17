@@ -31,6 +31,6 @@ output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
-    theme: flatly
+    theme: sandstone
     highlight: textmate
     code_folding: show

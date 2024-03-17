@@ -5,6 +5,8 @@ navbar:
   left:
   - text: Table of contents
     href: index.html
+  - text: Introduction
+    href: Introduction.html
   - text: Vignettes
     menu:
       - text: Structural analysis with MISTy - based on cell2location deconvolution

@@ -61,8 +61,10 @@ MISTy uses an explainable machine learning algorithm to analyze spatial omics da
 
 The goal of my project was to add new vignettes to the MISTy package, since they are the most frequently accessed part of the MISTy website. I have written a total of six vignettes that show how to answer the three questions described above.
 
-For five of the vignettes, I used a Visium 10X dataset from Kuppe et al. [@VisiumHeart]. They generated a comprehensive map of cardiac remodeling following myocardial infarction in humans. Multimodal data integration of single-cell gene expression, chromatin accessibility, and spatial transcriptomic data was performed to determine, for example, cell type composition. I selected patient 14's (P14) data for the vignettes. Two of the vignettes analyze structural relationships based on cell type distribution, while the other three analyze functional relationships based on spatial patterns of markers. Selected markers are, for example, receptors, ligands, or pathway-specific genes.
+For five of the vignettes, I used a Visium 10X dataset from Kuppe et al. [@VisiumHeart]. They generated a comprehensive map of cardiac remodeling following myocardial infarction in humans. Multimodal data integration of single-cell gene expression, chromatin accessibility, and spatial transcriptomic data was performed to determine, for example, cell type composition. I selected patient 14's (P14) data for the vignettes. Two of the vignettes analyze structural relationships based on cell type distribution, while the two analyze functional relationships based on spatial patterns of markers. The fifth vignette combines both structural and functional analysis. Selected markers are, for example, receptors, ligands, or pathway-specific genes.
 
 The sixth vignette demonstrates the sample signature analysis on an IMC dataset [@IMCBC] of tumors of three different grades, measuring 26 protein markers. In the vignette, I show how the samples can be distinguished by their signatures and that this grouping is similar to that by grade or clinical type.
+
+To summarize, by creating six vignettes, I have increased the accessibility of MISTy and established a general recipe for analysis with MISTy that can be adapted to individual needs.
 
 ## References

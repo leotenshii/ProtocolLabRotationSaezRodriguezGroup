@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2024-03-17" />
+<meta name="date" content="2024-03-24" />
 
 <title>Functional analysis with MISTy - pathway activity and ligand expression</title>
 
@@ -413,7 +413,7 @@ Slovenia<br><a class="author_email" href="mailto:#"><a
 href="mailto:jovan.tanevski@uni-heidelberg.de"
 class="email">jovan.tanevski@uni-heidelberg.de</a></a>
 </address>
-<h4 class="date">2024-03-17</h4>
+<h4 class="date">2024-03-24</h4>
 
 </div>
 
@@ -442,7 +442,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-03-17
+<strong>Last updated:</strong> 2024-03-24
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -574,15 +574,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptreea5a761bc69ab61eb2e2b6f990f5007de1c02d22dtargetblanka5a761ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree04325f8b7cfbc7f505fe06f188426562dc612bd9targetblank04325f8a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/a5a761bc69ab61eb2e2b6f990f5007de1c02d22d" target="_blank">a5a761b</a>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/04325f8b7cfbc7f505fe06f188426562dc612bd9" target="_blank">04325f8</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptreea5a761bc69ab61eb2e2b6f990f5007de1c02d22dtargetblanka5a761ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree04325f8b7cfbc7f505fe06f188426562dc612bd9targetblank04325f8a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -592,7 +592,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/a5a761bc69ab61eb2e2b6f990f5007de1c02d22d" target="_blank">a5a761b</a>.
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/04325f8b7cfbc7f505fe06f188426562dc612bd9" target="_blank">04325f8</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -606,9 +606,17 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/DOTResults.png
+
 Untracked files:
     Untracked:  10X_Visium_ACH005.tar.gz
     Untracked:  ACH005/
+    Untracked:  analysis/10X_Visium_ACH005.tar.gz
+    Untracked:  analysis/ACH005/
+    Untracked:  analysis/hca_p14.rds
     Untracked:  bc_metadata.tsv
     Untracked:  data/10X_Visium_ACH005.tar.gz
     Untracked:  data/ACH005/
@@ -668,6 +676,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/blob/04325f8b7cfbc7f505fe06f188426562dc612bd9/analysis/FunctionalPipelinePathwayActivityLigands.Rmd" target="_blank">04325f8</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-24
+</td>
+<td>
+wflow_publish(c("analysis/FunctionalAndStructuralPipeline.Rmd",
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/1e4a2afe050a7525d240ffe5105189f3ffdb6506/docs/FunctionalPipelinePathwayActivityLigands.html" target="_blank">1e4a2af</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -851,11 +893,12 @@ geometry &lt;- GetTissueCoordinates(seurat_vs, scale = NULL)</code></pre>
 <a
 href="https://saezlab.github.io/progeny/index.html"><code>PROGENy</code></a>.
 We delete the PROGENy assay done by Kuppe et al. and load a model matrix
-with the top 1000 significant genes for each of the 15 available
+with the top 1000 significant genes for each of the 14 available
 pathways. We then extract the genes that are both common to the PROGENy
-model and the snRNA-seq assay from the Seurat object. We compute the
-weighted sum of both and scale them to infer the pathway activity. We
-save the result in a Seurat assay and clean the row names to handle
+model and the snRNA-seq assay from the Seurat object. We estimate the
+pathway activity with a multivariate linear model using <a
+href="https://saezlab.github.io/decoupleR/"><code>decoupleR</code></a>.
+We save the result in a Seurat assay and clean the row names to handle
 problematic variables.</p>
 <pre class="r"><code>seurat_vs[[&#39;progeny&#39;]] &lt;- NULL
 
@@ -1026,12 +1069,13 @@ id="to-what-extent-can-the-analyzed-surrounding-tissues-activities-explain-the-p
 class="section level3">
 <h3>1. To what extent can the analyzed surrounding tissues’ activities
 explain the pathway activity of the spot compared to the intraview?</h3>
-<p>Here we can look at two different statistics: multi.R2 shows the
-total variance explained by the multiview model. gain.R2 shows the
-increase in explainable variance from the paraview.</p>
+<p>Here we can look at two different statistics: <code>multi.R2</code>
+shows the total variance explained by the multiview model.
+<code>gain.R2</code> shows the increase in explainable variance from the
+paraviews.</p>
 <pre class="r"><code>misty_results %&gt;%
-  plot_improvement_stats(&quot;gain.R2&quot;) %&gt;%
-  plot_improvement_stats(&quot;multi.R2&quot;)</code></pre>
+  plot_improvement_stats(&quot;multi.R2&quot;) %&gt;%
+  plot_improvement_stats(&quot;gain.R2&quot;)</code></pre>
 <pre><code>Warning: Removed 14 rows containing missing values or values outside the scale range
 (`geom_segment()`).</code></pre>
 <p><img src="figure/FunctionalPipelinePathwayActivityLigands.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1112,7 +1156,7 @@ leotenshii
 </table>
 </div>
 </div>
-<p>The paraview particularly increases the explained variance for TGFb
+<p>The paraviews particularly increase the explained variance for TGFb
 and PI3K. In general, the significant gain in R2 can be interpreted as
 the following:</p>
 <p>“We can better explain the expression of marker X when we consider
@@ -1254,7 +1298,7 @@ leotenshii
 <p>We can observe a correlation between high TNFa activity and high NFkB
 activity.</p>
 <p>Now we repeat this analysis with the pathway activity paraview. With
-<code>trim</code> we display only targets with a value above 0.5 for
+<code>trim</code> we display only targets with a value above 0.5% for
 <code>gain.R2</code>.</p>
 <pre class="r"><code>misty_results %&gt;%
   plot_interaction_heatmap(view = &quot;para.10&quot;, 

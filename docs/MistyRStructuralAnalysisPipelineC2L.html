@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2024-03-17" />
+<meta name="date" content="2024-03-24" />
 
 <title>Structural analysis with MISTy - based on cell2location deconvolution</title>
 
@@ -413,7 +413,7 @@ Slovenia<br><a class="author_email" href="mailto:#"><a
 href="mailto:jovan.tanevski@uni-heidelberg.de"
 class="email">jovan.tanevski@uni-heidelberg.de</a></a>
 </address>
-<h4 class="date">2024-03-17</h4>
+<h4 class="date">2024-03-24</h4>
 
 </div>
 
@@ -442,7 +442,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-03-17
+<strong>Last updated:</strong> 2024-03-24
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -574,15 +574,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptreea5a761bc69ab61eb2e2b6f990f5007de1c02d22dtargetblanka5a761ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree04325f8b7cfbc7f505fe06f188426562dc612bd9targetblank04325f8a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/a5a761bc69ab61eb2e2b6f990f5007de1c02d22d" target="_blank">a5a761b</a>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/04325f8b7cfbc7f505fe06f188426562dc612bd9" target="_blank">04325f8</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptreea5a761bc69ab61eb2e2b6f990f5007de1c02d22dtargetblanka5a761ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomleotenshiiProtocolLabRotationSaezRodriguezGrouptree04325f8b7cfbc7f505fe06f188426562dc612bd9targetblank04325f8a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -592,7 +592,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/a5a761bc69ab61eb2e2b6f990f5007de1c02d22d" target="_blank">a5a761b</a>.
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/tree/04325f8b7cfbc7f505fe06f188426562dc612bd9" target="_blank">04325f8</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -606,9 +606,17 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/DOTResults.png
+
 Untracked files:
     Untracked:  10X_Visium_ACH005.tar.gz
     Untracked:  ACH005/
+    Untracked:  analysis/10X_Visium_ACH005.tar.gz
+    Untracked:  analysis/ACH005/
+    Untracked:  analysis/hca_p14.rds
     Untracked:  bc_metadata.tsv
     Untracked:  data/10X_Visium_ACH005.tar.gz
     Untracked:  data/ACH005/
@@ -668,6 +676,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/blob/04325f8b7cfbc7f505fe06f188426562dc612bd9/analysis/MistyRStructuralAnalysisPipelineC2L.Rmd" target="_blank">04325f8</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-24
+</td>
+<td>
+wflow_publish(c("analysis/FunctionalAndStructuralPipeline.Rmd",
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/leotenshii/ProtocolLabRotationSaezRodriguezGroup/1e4a2afe050a7525d240ffe5105189f3ffdb6506/docs/MistyRStructuralAnalysisPipelineC2L.html" target="_blank">1e4a2af</a>
+</td>
+<td>
+leotenshii
+</td>
+<td>
+2024-03-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -949,10 +991,10 @@ there are cell types that share a similar distribution.</p>
 <p>First, we need to define an intraview that captures the cell type
 proportions within a spot. To capture the distribution of cell type
 proportions in the surrounding tissue, we add a paraview. For this
-vignette, the radius we choose is the distance to the nearest neighbor
-plus the standard deviation. We calculate the weights of each spot with
-<code>family = gaussian</code>. Then we run MISTy and collect the
-results.</p>
+vignette, the radius we choose is the mean of the distance to the
+nearest neighbor plus the standard deviation. We calculate the weights
+of each spot with <code>family = gaussian</code>. Then we run MISTy and
+collect the results.</p>
 <pre class="r"><code># Calculating the radius
 geom_dist &lt;- as.matrix(distances(geometry))  
 dist_nn &lt;- apply(geom_dist, 1, function(x) (sort(x)[2]))
@@ -1183,7 +1225,7 @@ leotenshii
 <p>We can observe that areas with high proportions of cardiomyocytes
 have low proportions of fibroblasts and vice versa.</p>
 <p>Now we repeat this analysis with the paraview. With <code>trim</code>
-we display only targets with a value above 1.75 for
+we display only targets with a value above 1.75% for
 <code>gain.R2</code>. To set an importance threshold we apply
 <code>cutoff</code>.</p>
 <pre class="r"><code>misty_results %&gt;% plot_interaction_heatmap(view = &quot;para.126&quot;, clean = TRUE, 
